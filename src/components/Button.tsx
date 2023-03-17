@@ -1,6 +1,17 @@
 import clsx from "clsx";
+import { ReactElement, ReactNode } from "react";
 
-export default function Button(props) {
+//using Button: Product/Cart/ProductDetailInfo/
+
+interface buttonProps {
+  outline?: boolean;
+  type?: "button" | "submit" | "reset" | undefined;
+  children: ReactNode;
+  className?: String;
+  onClick?: () => void;
+}
+
+export default function Button(props: buttonProps) {
   const { children, outline, className, ...rest } = props;
 
   const classNames = clsx(

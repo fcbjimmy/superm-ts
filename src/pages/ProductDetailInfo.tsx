@@ -1,9 +1,22 @@
 import Button from "../components/Button.js";
-import { useSelector, useDispatch } from "react-redux";
-import { addProduct } from "./store.js";
+// import { useSelector, useDispatch } from "react-redux";
+// import { addProduct } from "./store.js";
+import useCart from "../hooks/useCart.js";
+import { ProductTypes } from "./ProductDetails";
 
-export default function ProductDetailInfo({ product }) {
-  const dispatch = useDispatch();
+interface props {
+  product: ProductTypes;
+}
+
+export default function ProductDetailInfo({ product }: props) {
+  const { cart, dispatch, REDUCER_ACTIONS } = useCart();
+
+  const onAddToCart = () => {
+    dispatch({
+      type: REDUCER_ACTIONS.ADD,
+      payload: { ...product, quantity: 1 },
+    });
+  };
 
   return (
     <>
@@ -11,9 +24,7 @@ export default function ProductDetailInfo({ product }) {
         {product.description} sold at <strong>${product.price}</strong> per
         piece.
       </p>
-      <Button onClick={() => dispatch(addProduct(product))}>
-        ${product.price}
-      </Button>
+      <Button onClick={onAddToCart}>${product.price}</Button>
     </>
   );
 }

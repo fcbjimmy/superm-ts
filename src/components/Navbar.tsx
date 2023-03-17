@@ -1,16 +1,20 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { cartQuantity } from "./store";
+// import { useSelector } from "react-redux";
+// import { cartQuantity } from "./store";
+import { CartContext } from "../context/CartProvider";
+import { useContext } from "react";
+import "../App.css";
 
-export default function Navbar(props) {
-  const cartCount = useSelector(cartQuantity);
+export default function Navbar() {
+  // const cartCount = useSelector(cartQuantity);
+  const { totalItems } = useContext(CartContext);
 
   // const cartCount = props.cart.reduce(
   //   (total, product) => total + product.quantity,
   //   0
   // );
 
-  let activeClassName = "active";
+  let activeClassName: string = "active";
 
   return (
     <nav className="navbar">
@@ -50,7 +54,7 @@ export default function Navbar(props) {
         </li>
         <li>
           <NavLink to="/cart" className="nav-item nav-cart btn btn-accent">
-            Cart ({cartCount})
+            Cart ({totalItems})
           </NavLink>
         </li>
       </ul>

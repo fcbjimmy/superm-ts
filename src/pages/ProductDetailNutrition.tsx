@@ -1,4 +1,12 @@
-export default function ProductDetailNutrition({ nutrition }) {
+import { ProductTypes } from "./ProductDetails";
+
+type ObjectWithKeys<T, K extends keyof T> = { [P in K]: T[P] };
+
+type props = ObjectWithKeys<ProductTypes, "nutrition">;
+
+export default function ProductDetailNutrition({ nutrition }: props) {
+  const { protein, carbs, fat, salt } = nutrition;
+
   return (
     <table className="table table-nutrition">
       <thead>
@@ -10,19 +18,19 @@ export default function ProductDetailNutrition({ nutrition }) {
       <tbody>
         <tr>
           <td>Protein</td>
-          <td>{nutrition.protein}g</td>
+          <td>{protein}g</td>
         </tr>
         <tr>
           <td>Carbohydrates</td>
-          <td>{nutrition.carbs}g</td>
+          <td>{carbs}g</td>
         </tr>
         <tr>
           <td>Fat</td>
-          <td>{nutrition.fat}g</td>
+          <td>{fat}g</td>
         </tr>
         <tr>
           <td>Salt</td>
-          <td>{nutrition.salt}g</td>
+          <td>{salt}g</td>
         </tr>
       </tbody>
     </table>

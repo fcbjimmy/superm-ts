@@ -1,6 +1,15 @@
 import clsx from "clsx";
 
-export default function Input(props) {
+interface inputProps {
+  className?: string;
+  placeholder: string;
+  required: boolean;
+  type: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function Input(props: inputProps) {
   const { className, placeholder, required, type = "text", ...rest } = props;
 
   const classNames = clsx({ input: true }, className);

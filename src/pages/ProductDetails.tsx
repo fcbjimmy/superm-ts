@@ -4,18 +4,46 @@ import useFetch from "../hooks/useFetch.js";
 import ProductDetailInfo from "./ProductDetailInfo.js";
 import ProductDetailNutrition from "./ProductDetailNutrition.js";
 import ProductDetailStorage from "./ProductDetailStorage.js";
+import axios from "axios";
+
+const productTypes = {
+  description: "",
+  id: 0,
+  image: "",
+  name: "",
+  nutrition: { carbs: 0, fat: 0, protein: 0, salt: 0 },
+  price: 0,
+  price_id: "",
+  storage: "",
+};
+
+export type ProductTypes = typeof productTypes;
 
 export default function ProductDetails() {
-  const [product, setProduct] = useState({});
-  const { get } = useFetch("https://react-tutorial-demo.firebaseio.com/");
+  const [product, setProduct] = useState<ProductTypes>(productTypes);
+  // const { get } = useFetch("https://react-tutorial-demo.firebaseio.com/");
   const params = useParams();
-  console.log(params);
+
+  // useEffect(() => {
+  //   get(`productinfo/id${params.id}.json`)
+  //     .then((data) => {
+  //       setProduct(data);
+  //     })
+  //     .catch((error) => console.log("Could not load product details", error));
+  // }, []);
+
   useEffect(() => {
-    get(`productinfo/id${params.id}.json`)
-      .then((data) => {
-        setProduct(data);
-      })
-      .catch((error) => console.log("Could not load product details", error));
+    const fetchProducts = async () => {
+      try {
+        const { data } = await axios.get(
+          `https://react-tutorial-demo.firebaseio.com/productinfo/id${params.id}.json`
+        );
+        if (data) setProduct(data);
+      } catch (err) {
+        if (err instanceof Error) console.log(`${err.message}`);
+      }
+    };
+    fetchProducts();
   }, []);
 
   let activeclassname = "tab-active";
